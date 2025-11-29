@@ -3,6 +3,7 @@ import InputForm from "./components/InputForm";
 import Result from "./components/Result";
 import { validarEntrada } from "./automata/afd";
 import { descifrarConMT, cifrarConMT } from "./automata/turing";
+import "./index.css";
 
 function App() {
   const [resultado, setResultado] = useState("");
@@ -77,11 +78,23 @@ function App() {
   }
 
   return (
-    <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
-      <h1>Simulador de Cifrado César con AFD + Máquina de Turing</h1>
-      <InputForm onDescifrar={manejarDescifrado} onCifrar={manejarCifrado} />
-      <Result resultado={resultado} error={mensajeError} modo={modo} />
-    </div>
+    <>
+      <div className="bg-white min-h-screen place-content-center justify-self-center">
+        <div className="border-2 border-black rounded shadow-lg py-12 px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center">
+            <h1 className="text-3xl font-bold mb-1">
+              Simulador de Cifrado César con AFD
+            </h1>
+            <h1 className="text-2xl font-bold mb-5">+ Máquina de Turing</h1>
+          </div>
+          <InputForm
+            onDescifrar={manejarDescifrado}
+            onCifrar={manejarCifrado}
+          />
+          <Result resultado={resultado} error={mensajeError} modo={modo} />
+        </div>
+      </div>
+    </>
   );
 }
 

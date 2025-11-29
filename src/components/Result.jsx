@@ -2,8 +2,12 @@ export default function Result({ resultado, error, modo }) {
   if (!resultado && !error) return null;
 
   return (
-    <div style={{ marginTop: "20px", padding: "10px", border: "1px solid #ccc" }}>
-      {error && <p style={{ color: "red" }}><b>Error:</b> {error}</p>}
+    <div className="rounded-sm border-gray-400 border p-3 mt-4">
+      {error && (
+        <p className="text-red-500">
+          <b>Error:</b> {error}
+        </p>
+      )}
 
       {resultado && (
         <p>
