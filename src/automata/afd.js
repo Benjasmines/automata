@@ -1,11 +1,8 @@
-// AFD para el lenguaje: 1–2 dígitos + al menos 1 letra (incluye ñ)
-
 export function validarEntrada(cadena) {
   if (!cadena || cadena.length < 2) return false;
 
   const esDigito = (c) => c >= "0" && c <= "9";
-  const esLetra = (c) =>
-    (c >= "a" && c <= "z") || c === "ñ";
+  const esLetra = (c) => (c >= "a" && c <= "z") || c === "ñ";
 
   let estado = "q0";
 
@@ -24,7 +21,7 @@ export function validarEntrada(cadena) {
 
       case "q2":
         if (esLetra(c)) estado = "q3";
-        else return false; // no más de 2 dígitos
+        else return false;
         break;
 
       case "q3":

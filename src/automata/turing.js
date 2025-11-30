@@ -1,7 +1,5 @@
-// Alfabeto usado en español tradicional
 const alfabeto = "abcdefghijklmnñopqrstuvwxyz";
 
-// DESCIFRAR: entrada tipo "15pjidbpiph ad btydg"
 export function descifrarConMT(cadena) {
   cadena = cadena.trim();
 
@@ -30,25 +28,4 @@ export function descifrarConMT(cadena) {
   }
 
   return chars.join("");
-}
-
-// CIFRAR: entrada texto normal + número → "ntextoCifrado"
-export function cifrarConMT(texto, numero) {
-  const chars = texto.toLowerCase().split("");
-  const pasos = numero % alfabeto.length;
-
-  for (let p = 0; p < pasos; p++) {
-    for (let i = 0; i < chars.length; i++) {
-      const c = chars[i];
-
-      if (c === " ") continue;
-      const idx = alfabeto.indexOf(c);
-      if (idx === -1) continue;
-
-      const nuevo = (idx + 1) % alfabeto.length;
-      chars[i] = alfabeto[nuevo];
-    }
-  }
-
-  return `${numero}${chars.join("")}`;
 }
