@@ -2,7 +2,7 @@ import { useState } from "react";
 import InputForm from "./components/InputForm";
 import Result from "./components/Result";
 import { validarEntrada } from "./automata/afd";
-import { descifrarConMT, cifrarConMT } from "./automata/turing";
+import { descifrarConMT } from "./automata/turing";
 import "./index.css";
 
 function App() {
@@ -22,7 +22,6 @@ function App() {
 
     const cadena = cadenaOriginal.trim().toLowerCase();
 
-    // Acepta: 1–2 dígitos + letras (incluye ñ) + espacios
     const match = cadena.match(/^(\d{1,2})\s*([a-zñ\s]+)$/i);
     if (!match) {
       setMensajeError(
@@ -34,7 +33,6 @@ function App() {
     const numero = match[1];
     const texto = match[2];
 
-    // El AFD NO acepta espacios → los eliminamos solo para validarlo
     const cadenaValidacion = numero + texto.replace(/\s+/g, "");
 
     if (!validarEntrada(cadenaValidacion)) {
@@ -48,35 +46,6 @@ function App() {
     setResultado(resultadoDescifrado);
   }
 
-  function manejarCifrado(textoOriginal, numeroOriginal) {
-    setModo("cifrar");
-    setResultado("");
-    setMensajeError("");
-
-    if (!textoOriginal || textoOriginal.trim() === "") {
-      setMensajeError("Ingresa un texto para cifrar.");
-      return;
-    }
-
-    const texto = textoOriginal.trim().toLowerCase();
-    const numero = parseInt(numeroOriginal, 10);
-
-    if (isNaN(numero) || numero < 1 || numero > 99) {
-      setMensajeError("El número debe ser un entero entre 1 y 99.");
-      return;
-    }
-
-    if (!/^[a-zñ\s]+$/.test(texto)) {
-      setMensajeError(
-        "El texto a cifrar solo puede contener letras minúsculas, ñ y espacios."
-      );
-      return;
-    }
-
-    const cadenaCifrada = cifrarConMT(texto, numero);
-    setResultado(cadenaCifrada);
-  }
-
   return (
     <>
       <div className="bg-white min-h-screen place-content-center justify-self-center">
@@ -87,10 +56,7 @@ function App() {
             </h1>
             <h1 className="text-2xl font-bold mb-5">+ Máquina de Turing</h1>
           </div>
-          <InputForm
-            onDescifrar={manejarDescifrado}
-            onCifrar={manejarCifrado}
-          />
+          <InputForm onDescifrar={manejarDescifrado} />
           <Result resultado={resultado} error={mensajeError} modo={modo} />
         </div>
       </div>
