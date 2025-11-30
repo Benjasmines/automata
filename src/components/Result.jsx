@@ -1,4 +1,4 @@
-export default function Result({ resultado, error, modo }) {
+export default function Result({ resultado, error }) {
   if (!resultado && !error) return null;
 
   return (
@@ -11,8 +11,7 @@ export default function Result({ resultado, error, modo }) {
 
       {resultado && (
         <p>
-          <b>{modo === "cifrar" ? "Cadena cifrada:" : "Cadena descifrada:"}</b>{" "}
-          {resultado}
+          <b>{"Cadena descifrada:"}</b> {resultado}
         </p>
       )}
     </div>
