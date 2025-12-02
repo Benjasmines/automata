@@ -1,6 +1,7 @@
 # proyecto de automatas y lenguajes formales con React + Vite + tailwind
 
 proyecto hecho por Benjamin Uribe, Max Coñoman, Felipe Delgado  
+el automata del codigo acepta y lee la "ñ"  
 
 # importante instalar npm y yarn
 -npm install -g yarn  
