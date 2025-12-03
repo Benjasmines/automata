@@ -1,32 +1,71 @@
+// ===========================================================
+// Autómata Finito Determinista (AFD)
+// Lenguaje de entrada del problema:
+//
+//   L_in = [0-9]{1,2}[a-zñ]+
+//
+// Es decir: 1 o 2 dígitos seguidos de una o más letras minúsculas
+// (sin espacios, porque en App.jsx se eliminan antes de validar).
+// ===========================================================
+
+function esDigito(caracter) {
+  return caracter >= "0" && caracter <= "9";
+}
+
+function esLetra(caracter) {
+  return /[a-zñ]/.test(caracter);
+}
+
+/**
+ * Simula el AFD con los siguientes estados:
+ *
+ *  - q0 : estado inicial, aún no he leído nada.
+ *  - q1 : ya leí 1 dígito.
+ *  - q2 : ya leí 2 dígitos.
+ *  - qf : estoy en la parte de letras (zona de aceptación).
+ *
+ * Estado de aceptación: qf
+ */
 export function validarEntrada(cadena) {
-  if (!cadena || cadena.length < 2) return false;
-
-  const esDigito = (c) => c >= "0" && c <= "9";
-  const esLetra = (c) => (c >= "a" && c <= "z") || c === "ñ";
-
   let estado = "q0";
 
-  for (let c of cadena) {
+  for (const c of cadena) {
     switch (estado) {
       case "q0":
-        if (esDigito(c)) estado = "q1";
-        else return false;
+        if (esDigito(c)) {
+          estado = "q1";
+        } else {
+          return false;
+        }
         break;
 
       case "q1":
-        if (esDigito(c)) estado = "q2";
-        else if (esLetra(c)) estado = "q3";
-        else return false;
+        if (esDigito(c)) {
+          // Segundo dígito
+          estado = "q2";
+        } else if (esLetra(c)) {
+          // Comenzó la zona de letras
+          estado = "qf";
+        } else {
+          return false;
+        }
         break;
 
       case "q2":
-        if (esLetra(c)) estado = "q3";
-        else return false;
+        if (esLetra(c)) {
+          estado = "qf";
+        } else {
+          return false;
+        }
         break;
 
-      case "q3":
-        if (esLetra(c)) estado = "q3";
-        else return false;
+      case "qf":
+        if (esLetra(c)) {
+          // Seguimos leyendo letras
+          estado = "qf";
+        } else {
+          return false;
+        }
         break;
 
       default:
@@ -34,5 +73,6 @@ export function validarEntrada(cadena) {
     }
   }
 
-  return estado === "q3";
+  // Cadena válida solo si terminamos en la zona de letras
+  return estado === "qf";
 }
